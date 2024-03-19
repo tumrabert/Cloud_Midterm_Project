@@ -15,7 +15,7 @@ Let's see following this
 ## Requirement
 
 For me
-I used Linux for deploying terraform.
+I used Linux for install terraform and deployment.
 
 What're you need in linux ?
 
@@ -26,7 +26,8 @@ $ sudo yum -y install terraform
 ```
 
 You have to create user with Role following these policies:
-(To make is Easy, Just Allow them to Full Access, but it's not practical)
+
+(To make is Easy, Just Allow them to Full Access, but it's not practical in real life)
 
 - EC2FullAccess
 - S3FullAccess
@@ -43,7 +44,11 @@ You have to create user with Role following these policies:
 2.  Run `terraform init` to initialize.
 3.  Run `mv terraform.tfvars.example terraform.tfvars` to rename .example in to .tfvars
 4.  Change variables in file `terraform.tfvars` whatever you want.
-    (Not Guarantee that If you change AMI,This Deployment still working or not.)
+
+    EC2 AMI specfication is **Ubuntu Server 22.04 LTS(HVM) 64 bit**
+
+    (Not Guarantee that If you change AMI, Deployment would be trigger error.)
+
 5.  Run `terraform apply` TO Apply module.
 6.  Enter `yes` when this promted was shown.
 
