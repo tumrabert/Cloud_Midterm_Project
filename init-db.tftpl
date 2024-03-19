@@ -1,0 +1,28 @@
+#!/bin/bash
+# save output to log file
+exec > /home/ubuntu/init.log                                                                
+exec 2>&1
+# setup public key for ssh
+tee -a /home/ubuntu/.ssh/authorized_keys << EOF
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODaHqtrCOBpfD+meWggDG5gFEqnNDtpxnqQ7xWIfXfL cloud-wordpress
+EOF
+
+# install mariadb with specific version
+sudo apt-get install -y apt-transport-https curl
+sudo mkdir -p /etc/apt/keyrings
+sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
+sudo apt-get update
+sudo apt-get install -y mariadb-server
+
+# allow remote connections
+echo "[mysqld]" | sudo tee -a /etc/mysql/my.cnf
+echo "bind-address = 0.0.0.0" | sudo tee -a /etc/mysql/my.cnf
+sudo systemctl restart mariadb
+
+# create db user
+sudo mysql << EOF
+CREATE DATABASE ${database_name};
+CREATE USER ${database_user}@'%' IDENTIFIED BY '${database_pass}';
+GRANT ALL ON ${database_name}.* TO ${database_user}@'%';
+FLUSH PRIVILEGES;
+EOF
