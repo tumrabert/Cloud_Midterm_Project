@@ -6,11 +6,11 @@ This repository for showing Automatically deployment Wordpress application on AW
 
 Let's see following this
 
-[Link to project detail](information\Project_detail.pdf)
+[Link to project detail](information/Project_detail.pdf)
 
 ## Infrastructure
 
-![infrastructure](information\Overall_infrastructure.png)
+![infrastructure](information/Overall_infrastructure.png)
 
 ## Requirement
 
@@ -34,8 +34,13 @@ You have to create user with Role following these policies:
 
 ## How to Deploy
 
-1.  Clone this repository.(Don't forget to `cd  ` into folder)
-2.  Run `terraform init` to initialize
+1.  Clone this repository.
+
+    `git clone https://github.com/tumrabert/Cloud_Midterm_Project.git`
+
+    (Don't forget to change directory `cd Cloud_Midterm_Project` )
+
+2.  Run `terraform init` to initialize.
 3.  Run `mv terraform.tfvars.example terraform.tfvars` to rename .example in to .tfvars
 4.  Change variables in file `terraform.tfvars` whatever you want.
     (Not Guarantee that If you change AMI,This Deployment still working or not.)
