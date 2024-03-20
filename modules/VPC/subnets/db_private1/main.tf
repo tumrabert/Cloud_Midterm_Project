@@ -2,6 +2,10 @@ resource "aws_subnet" "db_private1" {
     vpc_id = var.vpc_id
     cidr_block = var.cidr_block
     availability_zone = var.availability_zone
+
+    tags = {
+    Name = "subnet-db_private1"
+  }
   
 }
 
@@ -10,6 +14,9 @@ resource "aws_route_table" "database_rtb" {
   route  {
     cidr_block="0.0.0.0/0"
     nat_gateway_id=var.ngw_id
+  }
+  tags = {
+    Name = "db_private1_rtb"
   }
 }
 
@@ -51,6 +58,10 @@ resource "aws_network_interface" "db_private1" {
   subnet_id = aws_subnet.db_private1.id
   security_groups = [aws_security_group.sg_database.id]
 
+  tags = {
+    Name = "db_private1_eni" 
+  }
+
 }
 
 resource "aws_instance" "database_server" {
@@ -72,6 +83,10 @@ resource "aws_instance" "database_server" {
     database_user=var.database_user
     database_pass=var.database_pass
   })
+
+  tags = {
+    Name = "db_server-ec2-instance" 
+  }
 }
 
 output "db_server_private_ip" {

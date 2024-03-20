@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "bucket" {
   bucket = var.bucket_name
   force_destroy = true
+
 }
 
 resource "aws_s3_bucket_ownership_controls" "main" {
@@ -42,22 +43,7 @@ resource "aws_iam_user_policy_attachment" "s3_user_attachment" {
 resource "aws_iam_access_key" "s3_user" {
     user = aws_iam_user.s3.name
 }
-/*
-resource "aws_iam_user_policy" "s3" {
-  name = "WordpressS3Access"
-  user = aws_iam_user.s3.name
 
-  policy = data.aws_iam_policy_document.s3.json
-}
-
-data "aws_iam_policy_document" "s3" {
-  statement {
-    actions   = ["s3:*", "s3:PutBucketAcl"]
-    resources = [aws_s3_bucket.bucket.arn, "${aws_s3_bucket.bucket.arn}/*","*"]
-    effect    = "Allow"
-  }
-}
-*/
 output "iam_s3_access_key" {
   value = aws_iam_access_key.s3.id
 }

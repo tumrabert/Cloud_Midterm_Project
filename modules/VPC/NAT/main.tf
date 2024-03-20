@@ -4,14 +4,14 @@ resource "aws_subnet" "nat_public" {
   availability_zone = var.availability_zone
 
   tags = {
-    Name = "wordpress-midterm-subnet-nat-public"
+    Name = "subnet-nat-webpublic1"
   }
 }
 
 resource "aws_eip" "nat_eip" {
   vpc = true
   tags = {
-    Name = "wordpress-midterm-eip-nat"
+    Name = "webpublic1_eip-nat"
   }
 }
 
@@ -20,7 +20,7 @@ resource "aws_nat_gateway" "ngw" {
   subnet_id     = aws_subnet.nat_public.id
 
   tags = {
-    Name = "wordpress-midterm-ngw"
+    Name = "webpublic1_ngw"
   }
 }
 
@@ -33,13 +33,14 @@ resource "aws_route_table" "nat_rtb" {
   }
 
   tags = {
-    Name = "wordpress-midterm-nat-rtb"
+    Name = "webpublic1_rtb"
   }
 }
 
 resource "aws_route_table_association" "nat_rtb" {
   subnet_id      = aws_subnet.nat_public.id
   route_table_id = aws_route_table.nat_rtb.id
+  
 }
 
 output "ngw_id" {
