@@ -2,6 +2,10 @@ resource "aws_subnet" "web_public1" {
   vpc_id = var.vpc_id
   cidr_block = var.cidr_block
   availability_zone = var.availability_zone
+
+  tags = {
+    Name = "subnet_web_public1"
+  }
 }
 
 resource "aws_route_table" "web_rtb" {
@@ -12,6 +16,10 @@ route{
     cidr_block = "0.0.0.0/0"
     gateway_id = var.igw_id
 }
+
+tags = {
+    Name = "web_server_rtb"
+  }
 }
 
 resource "aws_route_table_association" "web_rtb" {
@@ -54,7 +62,7 @@ resource "aws_network_interface" "web_public1" {
   security_groups = [aws_security_group.sg_web.id]
 
   tags = {
-    Name = "sds-midterm-eni-web-public"
+    Name = "eni-web-public"
   }
 }
 
@@ -95,6 +103,10 @@ resource "aws_instance" "web_server" {
     bucket_name       = var.bucket_name
     bucket_region     = var.bucket_region
   })
+
+  tags = {
+    Name = "webserver-ec2-instance" 
+  }
   
 }
 
